@@ -35,4 +35,17 @@ router.post('/log', async (req, res) => {
   }
 });
 
+
+
+// Get all logs
+router.get('/all', async (req, res) => {
+    try {
+      const logs = await Log.find().sort({ timestamp: -1 }); // Sort logs by latest first
+      res.status(200).json(logs);
+    } catch (error) {
+      res.status(500).json({ error: 'Failed to fetch logs' });
+    }
+  });
+  
+
 module.exports = router;
