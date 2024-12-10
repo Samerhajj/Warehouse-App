@@ -25,29 +25,42 @@ router.post('/add', async (req, res) => {
 });
 
 
-// Update Item
+// Update Item Quantity
 router.put('/update/:id', async (req, res) => {
   try {
     const { id } = req.params;
-    const { name, quantity, category, size } = req.body; // Include size
+    const { change } = req.body; // `change` is the amount to add or remove
 
-    const updatedItem = await Item.findByIdAndUpdate(
-      id,
-      { name, quantity, category, size }, // Pass size
-      { new: true }
-    );
+    if (!change || typeof change !== 'number') {
+      return res.status(400).json({ error: 'Change must be a numeric value' });
+    }
 
-    // Log the update
+    const item = await Item.findById(id);
+    if (!item) {
+      return res.status(404).json({ error: 'Item not found' });
+    }
+
+    // Adjust quantity
+    const newQuantity = item.quantity + change;
+    if (newQuantity < 0) {
+      return res.status(400).json({ error: 'Insufficient stock for the requested withdrawal' });
+    }
+
+    item.quantity = newQuantity;
+    await item.save();
+
+    // Log the quantity adjustment
     const log = new Log({
       action: 'update',
-      items: [{ name: updatedItem.name, quantity, size, action: 'updated' }], // Include size
-      message: `Updated ${updatedItem.name} (Size: ${size}) with new quantity: ${quantity}.`,
+      items: [{ name: item.name, size: item.size, action: 'quantity adjusted', change }],
+      message: `Updated ${item.name} (Size: ${item.size}). Change: ${change}. New quantity: ${newQuantity}.`,
     });
     await log.save();
 
-    res.status(200).json({ message: 'Item updated!', item: updatedItem });
+    res.status(200).json({ message: 'Quantity updated successfully', item });
   } catch (error) {
-    res.status(500).json({ error: 'Failed to update item' });
+    console.error('Error updating item quantity:', error);
+    res.status(500).json({ error: 'Failed to update item quantity' });
   }
 });
 
@@ -106,6 +119,56 @@ router.get('/search', async (req, res) => {
   } catch (error) {
     console.error('Error during search:', error);
     res.status(500).json({ error: 'Failed to search items' });
+  }
+});
+
+
+// Bulk Update Item Quantities
+router.put('/bulk-update', async (req, res) => {
+  try {
+    const updates = req.body; // Expecting an array of { id, change } objects
+    if (!Array.isArray(updates) || updates.length === 0) {
+      return res.status(400).json({ error: 'Updates must be a non-empty array' });
+    }
+
+    const results = [];
+    const logs = [];
+
+    for (const update of updates) {
+      const { id, change } = update;
+      if (!id || typeof change !== 'number') {
+        continue; // Skip invalid entries
+      }
+
+      const item = await Item.findById(id);
+      if (!item) {
+        continue; // Skip non-existent items
+      }
+
+      const newQuantity = item.quantity + change;
+      if (newQuantity < 0) {
+        continue; // Skip items with insufficient stock
+      }
+
+      item.quantity = newQuantity;
+      await item.save();
+
+      results.push(item);
+      logs.push({ name: item.name, size: item.size, action: 'quantity adjusted', change });
+    }
+
+    // Log the bulk quantity adjustments
+    const log = new Log({
+      action: 'bulk-update',
+      items: logs,
+      message: `Bulk update performed. ${logs.length} items adjusted.`,
+    });
+    await log.save();
+
+    res.status(200).json({ message: 'Bulk update successful', results });
+  } catch (error) {
+    console.error('Error in bulk update:', error);
+    res.status(500).json({ error: 'Bulk update failed' });
   }
 });
 

@@ -6,6 +6,12 @@
     <title>Manage Items</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="./css/styles.css">
+    <!-- Toastify CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+
+<!-- Toastify JS -->
+<script src="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.js"></script>
+
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -64,10 +70,11 @@
             <table class="table table-striped" id="itemsTable">
                 <thead class="table-dark">
                     <tr>
+                        <th><input type="checkbox" id="selectAll" /></th>
                         <th>Name</th>
                         <th>Size</th>
                         <th>Quantity</th>
-                        <th>Actions</th>
+                        <th>Change Quantity</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -75,6 +82,22 @@
                 </tbody>
             </table>
         </div>
+
+        <!-- Bulk Update Form -->
+        <div class="mt-5">
+            <h2>Bulk Update</h2>
+            <form id="bulkUpdateForm" class="row g-3">
+                <div class="col-md-6">
+                    <label for="bulkQuantityChange" class="form-label">Bulk Change Quantity:</label>
+                    <!--<input type="number" id="bulkQuantityChange" class="form-control" required>-->
+                </div>
+                <div class="col-12">
+                    <button type="submit" class="btn btn-warning">Apply Bulk Update</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Add Item Form -->
         <div class="mt-5">
             <h2>Add Item</h2>
             <form id="addItemForm" class="row g-3">
@@ -102,5 +125,4 @@
     </div>
     <script src="./js/items.js"></script>
 </body>
-
 </html>
