@@ -39,17 +39,33 @@
         .add-item-form {
             margin-top: 20px;
         }
+        .search-bar {
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+        }
+        .search-bar input {
+            padding: 10px;
+            width: 300px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
     </style>
 </head>
 <body>
     <h1>Manage Items</h1>
+     <!-- Search Bar Section -->
+     <div class="search-bar">
+        <input type="text" id="searchInput" placeholder="Search items..." onkeyup="searchItems()">
+    </div>
     <div class="item-list">
         <table id="itemsTable">
             <thead>
                 <tr>
                     <th>Name</th>
+                    <th>Size</th>
                     <th>Quantity</th>
-                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -62,6 +78,8 @@
         <form id="addItemForm">
             <label for="itemName">Name:</label>
             <input type="text" id="itemName" name="name" required>
+            <label for="itemSize">Size:</label>
+            <input type="text" id="itemName" name="size" required>
             <label for="itemQuantity">Quantity:</label>
             <input type="number" id="itemQuantity" name="quantity" required>
             <label for="itemCategory">Category:</label>

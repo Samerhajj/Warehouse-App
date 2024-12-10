@@ -13,8 +13,8 @@ async function fetchItems() {
             const row = document.createElement('tr');
             row.innerHTML = `
                 <td>${item.name}</td>
+                <td>${item.size}</td>
                 <td>${item.quantity}</td>
-                <td>${item.category}</td>
                 <td class="actions">
                     <button onclick="updateItem('${item._id}')">Update</button>
                     <button onclick="deleteItem('${item.name}')">Delete</button>
@@ -25,6 +25,25 @@ async function fetchItems() {
     } catch (error) {
         console.error('Error fetching items:', error);
     }
+}
+
+// Search function to filter items based on the search query
+function searchItems() {
+    const searchInput = document.getElementById('searchInput').value.toLowerCase();
+    const itemsTable = document.getElementById('itemsTable').getElementsByTagName('tbody')[0];
+    const rows = itemsTable.getElementsByTagName('tr');
+
+    Array.from(rows).forEach(row => {
+        const nameCell = row.cells[0].textContent.toLowerCase();
+        const sizeCell = row.cells[1].textContent.toLowerCase();
+        const quantityCell = row.cells[2].textContent.toLowerCase();
+
+        if (nameCell.includes(searchInput) || sizeCell.includes(searchInput) || quantityCell.includes(searchInput)) {
+            row.style.display = ''; // Show row
+        } else {
+            row.style.display = 'none'; // Hide row
+        }
+    });
 }
 
 // Add new item
