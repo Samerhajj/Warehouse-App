@@ -51,6 +51,8 @@ document.querySelector('#addItemForm').addEventListener('submit', async (event) 
     event.preventDefault();
 
     const name = document.querySelector('#itemName').value;
+    const size = document.querySelector('#itemSize').value;
+    console.log(size);
     const quantity = document.querySelector('#itemQuantity').value;
     const category= document.querySelector('#itemCategory').value
 
@@ -58,11 +60,13 @@ document.querySelector('#addItemForm').addEventListener('submit', async (event) 
         const response = await fetch(`${apiBase}/add`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ name, quantity ,category}),
+            body: JSON.stringify({ name,size, quantity ,category}),
         });
         console.log(response.body);
 
         if (!response.ok) throw new Error('Failed to add item');
+        const data = await response.json();
+        console.log('Add response:', data);
         fetchItems(); // Refresh the list
         document.querySelector('#addItemForm').reset(); // Clear form inputs
     } catch (error) {

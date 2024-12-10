@@ -1,0 +1,9 @@
+body {
+    font-family: 'Arial', sans-serif;
+}
+h1, h2 {
+    color: #333;
+}
+.table-responsive {
+    margin-top: 20px;
+}

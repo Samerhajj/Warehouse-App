@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manage Items</title>
-    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="./css/styles.css">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -54,39 +55,52 @@
     </style>
 </head>
 <body>
-    <h1>Manage Items</h1>
-     <!-- Search Bar Section -->
-     <div class="search-bar">
-        <input type="text" id="searchInput" placeholder="Search items..." onkeyup="searchItems()">
-    </div>
-    <div class="item-list">
-        <table id="itemsTable">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Size</th>
-                    <th>Quantity</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Items will be dynamically added here -->
-            </tbody>
-        </table>
-    </div>
-    <div class="add-item-form">
-        <h2>Add Item</h2>
-        <form id="addItemForm">
-            <label for="itemName">Name:</label>
-            <input type="text" id="itemName" name="name" required>
-            <label for="itemSize">Size:</label>
-            <input type="text" id="itemName" name="size" required>
-            <label for="itemQuantity">Quantity:</label>
-            <input type="number" id="itemQuantity" name="quantity" required>
-            <label for="itemCategory">Category:</label>
-            <input type="text" id="itemCategory" name="category" required>
-            <button type="submit">Add Item</button>
-        </form>
+    <div class="container mt-5">
+        <h1 class="text-center">Manage Items</h1>
+        <div class="mb-4">
+            <input type="text" id="searchInput" class="form-control" placeholder="Search items..." oninput="searchItems()">
+        </div>
+        <div class="table-responsive">
+            <table class="table table-striped" id="itemsTable">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Name</th>
+                        <th>Size</th>
+                        <th>Quantity</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Items will be dynamically added here -->
+                </tbody>
+            </table>
+        </div>
+        <div class="mt-5">
+            <h2>Add Item</h2>
+            <form id="addItemForm" class="row g-3">
+                <div class="col-md-6">
+                    <label for="itemName" class="form-label">Name:</label>
+                    <input type="text" id="itemName" name="name" class="form-control" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="itemSize" class="form-label">Size:</label>
+                    <input type="text" id="itemSize" name="size" class="form-control" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="itemQuantity" class="form-label">Quantity:</label>
+                    <input type="number" id="itemQuantity" name="quantity" class="form-control" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="itemCategory" class="form-label">Category:</label>
+                    <input type="text" id="itemCategory" name="category" class="form-control" required>
+                </div>
+                <div class="col-12">
+                    <button type="submit" class="btn btn-primary">Add Item</button>
+                </div>
+            </form>
+        </div>
     </div>
     <script src="./js/items.js"></script>
 </body>
+
 </html>
