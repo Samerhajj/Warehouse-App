@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Items</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+        }
+        .item-list {
+            margin-top: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        .actions {
+            display: flex;
+            gap: 10px;
+        }
+        button {
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+        .add-item-form {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Manage Items</h1>
+    <div class="item-list">
+        <table id="itemsTable">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Quantity</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Items will be dynamically added here -->
+            </tbody>
+        </table>
+    </div>
+    <div class="add-item-form">
+        <h2>Add Item</h2>
+        <form id="addItemForm">
+            <label for="itemName">Name:</label>
+            <input type="text" id="itemName" name="name" required>
+            <label for="itemQuantity">Quantity:</label>
+            <input type="number" id="itemQuantity" name="quantity" required>
+            <label for="itemCategory">Category:</label>
+            <input type="text" id="itemCategory" name="category" required>
+            <button type="submit">Add Item</button>
+        </form>
+    </div>
+    <script src="./js/items.js"></script>
+</body>
+</html>
